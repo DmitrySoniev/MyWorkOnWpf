@@ -1,0 +1,29 @@
+﻿<Window x:Class="RabotaDlyaTrpo.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RabotaDlyaTrpo"
+        mc:Ignorable="d"
+        Title="Main" Height="420" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/lake.jpg"/>
+    </Window.Background>
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="32,19,0,0" TextWrapping="Wrap" Text="Для нахождения площади ромба введите значение стороны и угла ромба или значение двух диагоналей" FontFamily="Helvetica" FontSize="15" Foreground="White" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="57,61,0,0" TextWrapping="Wrap" Text="Сторона ромба" Foreground="White" FontFamily="Helvetica" FontSize="16" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="472,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Угол ромба" Foreground="White" FontFamily="Helvetica" FontSize="16"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="57,124,0,0" TextWrapping="Wrap" Text="Диагональ 1" Foreground="White" FontFamily="Helvetica" FontSize="16" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="472,124,0,0" TextWrapping="Wrap" Text="Диагональ 2" Foreground="White" FontFamily="Helvetica" FontSize="16" VerticalAlignment="Top"/>
+        <TextBox Name="sideRomb" HorizontalAlignment="Left" Height="23" Margin="212,61,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="171" PreviewMouseLeftButtonDown="sideRomb_PreviewMouseLeftButtonDown" PreviewTextInput="sideRomb_PreviewTextInput"/>
+        <TextBox Name="firstDiagonalRomb" HorizontalAlignment="Left" Height="23" Margin="212,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="171" PreviewMouseLeftButtonDown="firstDiagonalRomb_PreviewMouseLeftButtonDown" PreviewTextInput="firstDiagonalRomb_PreviewTextInput"/>
+        <TextBox Name="angleRomb" HorizontalAlignment="Left" Height="23" Margin="591,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="171" PreviewMouseLeftButtonDown="angleRomb_PreviewMouseLeftButtonDown" PreviewTextInput="angleRomb_PreviewTextInput"/>
+        <TextBox Name="secondDiagonalRomb" HorizontalAlignment="Left" Height="23" Margin="591,122,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="171" PreviewMouseLeftButtonDown="secondDiagonalRomb_PreviewMouseLeftButtonDown" PreviewTextInput="secondDiagonalRomb_PreviewTextInput"/>
+        <Button x:Name="CalculateRombButton" Content="Рассчитать площадь ромба" FontFamily="Helvetica" FontSize="16"  HorizontalAlignment="Left" Margin="348,191,0,0" VerticalAlignment="Top" Width="209" Click="CalculateRombButton_Click"/>
+        <TextBox Name="areaRomb" HorizontalAlignment="Left" Height="23" Margin="365,268,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229"/>
+        <TextBlock HorizontalAlignment="Left" Margin="232,268,0,0" TextWrapping="Wrap" Text="Плошадь ромба" Foreground="White" FontFamily="Helvetica" FontSize="16" VerticalAlignment="Top"/>
+        <Button Name="ClearButton" Content="Очистить" HorizontalAlignment="Left" FontFamily="Helvetica" FontSize="16" Margin="641,325,0,0" VerticalAlignment="Top" Width="75" Click="ClearButton_Click"/>
+        <Button x:Name="ChangeUserButton" Content="Сменить пользователя" FontFamily="Helvetica" FontSize="16" HorizontalAlignment="Left" Margin="49,325,0,0" VerticalAlignment="Top" Width="189" Height="26" Click="ChangeUserButton_Click"/>
+
+    </Grid>
+</Window>
