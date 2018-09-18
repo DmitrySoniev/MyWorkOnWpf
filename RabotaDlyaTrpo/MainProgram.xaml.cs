@@ -88,7 +88,7 @@ namespace RabotaDlyaTrpo
                 var A = Convert.ToInt32(sideRomb.Text);
                 var B = Convert.ToInt32(angleRomb.Text);
                 int S;
-                S = A+B;
+                S = A + B;
                 areaRomb.Text = S.ToString();
             }
 
