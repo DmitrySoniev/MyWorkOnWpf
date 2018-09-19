@@ -64,7 +64,7 @@ namespace RabotaDlyaTrpo
 
             if (MessageBox.Show("Вы действительно хотите сменить пользователя", "Сменить пользователя?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
             {
-               
+
             }
             else
             {
@@ -90,6 +90,28 @@ namespace RabotaDlyaTrpo
         private void CalculateRombButton_Click(object sender, RoutedEventArgs e)
         {
             //Спросить про формулы вычисления ромба
+            if (sideRomb.Text == "" && firstDiagonalRomb.IsEnabled==false && secondDiagonalRomb.IsEnabled ==false)
+            {
+                MessageBox.Show("Введите сторону ромба!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+            if (angleRomb.Text == "" && firstDiagonalRomb.IsEnabled == false && secondDiagonalRomb.IsEnabled == false)
+            {
+                MessageBox.Show("Введите угол ромба!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+            if (firstDiagonalRomb.Text == "" && sideRomb.IsEnabled == false && angleRomb.IsEnabled == false)
+            {
+                MessageBox.Show("Введите первую диагональ ромба!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (secondDiagonalRomb.Text == "" && sideRomb.IsEnabled == false && angleRomb.IsEnabled == false)
+            {
+                MessageBox.Show("Введите вторую диагональ ромба!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             if (sideRomb.Text != "" && angleRomb.Text != "")
             {
@@ -99,6 +121,7 @@ namespace RabotaDlyaTrpo
                 S = A + B;
                 areaRomb.Text = S.ToString();
             }
+
 
             if (firstDiagonalRomb.Text != "" && secondDiagonalRomb.Text != "")
             {

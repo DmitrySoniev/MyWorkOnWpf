@@ -28,8 +28,10 @@ namespace RabotaDlyaTrpo
             if (string.IsNullOrEmpty(LoginTextBox.Text))
             {
                 MessageBox.Show("Пустой логин", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 return;
             }
+            
 
             if (string.IsNullOrEmpty(PasswordBox.Password))
             {
@@ -68,7 +70,7 @@ namespace RabotaDlyaTrpo
             if (LoginTextBox.Text != "" && ImyaTextBox.Text != "" && FamiliyaTextBox.Text != "" && OtchestvoTextBox.Text != "" && PasswordBox.Password != "" && VerifyPasswordBox.Password != "")
             {
                 MessageBox.Show("Регистрация прошла успешно!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
-                
+
                 Window _registrationWindow = new MainWindow();
                 this.Close();
                 _registrationWindow.ShowDialog();
@@ -89,5 +91,6 @@ namespace RabotaDlyaTrpo
         {
             if (!Char.IsLetter(e.Text, 0)) e.Handled = true;
         }
+
     }
 }
