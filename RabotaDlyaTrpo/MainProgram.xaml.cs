@@ -61,9 +61,17 @@ namespace RabotaDlyaTrpo
 
         private void ChangeUserButton_Click(object sender, RoutedEventArgs e)
         {
-            Window _mainWindow = new MainWindow();
-            this.Close();
-            _mainWindow.ShowDialog();
+
+            if (MessageBox.Show("Вы действительно хотите сменить пользователя", "Сменить пользователя?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+               
+            }
+            else
+            {
+                Window _mainWindow = new MainWindow();
+                this.Close();
+                _mainWindow.ShowDialog();
+            }
         }
 
 

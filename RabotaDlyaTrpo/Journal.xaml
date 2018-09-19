@@ -12,6 +12,10 @@
     </Window.Background>
 
     <Grid>
-        
+        <ListBox x:Name="JournaListBox" HorizontalAlignment="Left" Height="313"  Margin="91,46,0,0" VerticalAlignment="Top" Width="594"/>
+        <Label Content="Журнал" FontFamily="Helvetica"  FontSize="20" Foreground="White" HorizontalAlignment="Left" Margin="51,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="ChangeUserButton" FontFamily="Helvetica" FontSize="16" Content="Сменить пользователя" HorizontalAlignment="Left" Margin="91,377,0,0" VerticalAlignment="Top" Width="180" Height="25" Click="ChangeUserButton_Click"/>
+        <Button x:Name="CheckJournalButton" Content="Просмотреть журнал" FontFamily="Helvetica" FontSize="16" HorizontalAlignment="Left" Margin="503,377,0,0" VerticalAlignment="Top" Width="182" Click="CheckJournalButton_Click"/>
+
     </Grid>
 </Window>
