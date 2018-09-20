@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace RabotaDlyaTrpo
 {
@@ -22,16 +23,21 @@ namespace RabotaDlyaTrpo
         public Registration()
         {
             InitializeComponent();
+            LoginTextBox.MaxLength = 15;
+            PasswordBox.MaxLength = 20;
+            FamiliyaTextBox.MaxLength = 20;
+            ImyaTextBox.MaxLength = 20;
+            OtchestvoTextBox.MaxLength = 20;
+
         }
         private void RegistrationButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(LoginTextBox.Text))
             {
                 MessageBox.Show("Пустой логин", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-
                 return;
             }
-            
+
 
             if (string.IsNullOrEmpty(PasswordBox.Password))
             {
@@ -69,6 +75,19 @@ namespace RabotaDlyaTrpo
 
             if (LoginTextBox.Text != "" && ImyaTextBox.Text != "" && FamiliyaTextBox.Text != "" && OtchestvoTextBox.Text != "" && PasswordBox.Password != "" && VerifyPasswordBox.Password != "")
             {
+                // Заглушка
+                //User _user = new User();
+
+                //_user.login = LoginTextBox.Text;
+                //_user.password = VerifyPasswordBox.Password;
+                //_user.imya = ImyaTextBox.Text;
+                //_user.familiya = FamiliyaTextBox.Text;
+                //_user.otchestvo = OtchestvoTextBox.Text;
+                //StreamWriter _streamWriter = new StreamWriter("bd.txt");
+                //_streamWriter.WriteLine(_user.login);
+
+
+
                 MessageBox.Show("Регистрация прошла успешно!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 Window _registrationWindow = new MainWindow();
