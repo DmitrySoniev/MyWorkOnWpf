@@ -23,6 +23,9 @@ namespace RabotaDlyaTrpo
         public MainWindow()
         {
             InitializeComponent();
+            LoginTextBox.Text = "Dmitry";
+            LoginPasswordBox.Password = "Dmitry";
+      
         }
 
         private void RegistrationClick(object sender, RoutedEventArgs e)
@@ -47,12 +50,23 @@ namespace RabotaDlyaTrpo
                 return;
             }
 
+            string login = "Dmitry";
+            string password = "Dmitry";
 
             if (LoginTextBox.Text != "" && LoginPasswordBox.Password != "")
             {
-                Window _authorizationWindow = new Main();
-                this.Close();
-                _authorizationWindow.ShowDialog();
+
+                if (LoginTextBox.Text == login && LoginPasswordBox.Password == password)
+                {
+                    Window _authorizationWindow = new Main();
+                    this.Close();
+                    _authorizationWindow.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Неверно введен логин или пароль, или учетная запись не создана", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
         }
 

@@ -25,6 +25,7 @@ namespace RabotaDlyaTrpo
             InitializeComponent();
             LoginTextBox.MaxLength = 15;
             PasswordBox.MaxLength = 20;
+            VerifyPasswordBox.MaxLength = 20;
             FamiliyaTextBox.MaxLength = 20;
             ImyaTextBox.MaxLength = 20;
             OtchestvoTextBox.MaxLength = 20;
