@@ -38,6 +38,7 @@ namespace RabotaDlyaTrpo
         private void firstDiagonalRomb_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
+            
         }
 
         private void secondDiagonalRomb_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -89,11 +90,11 @@ namespace RabotaDlyaTrpo
 
         private void CalculateRombButton_Click(object sender, RoutedEventArgs e)
         {
-            //Спросить про формулы вычисления ромба
-            if (sideRomb.Text == "" && firstDiagonalRomb.IsEnabled==false && secondDiagonalRomb.IsEnabled ==false)
+            
+            if (sideRomb.Text == "" && firstDiagonalRomb.IsEnabled == false && secondDiagonalRomb.IsEnabled == false)
             {
                 MessageBox.Show("Введите сторону ромба!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-                return; 
+                return;
             }
             if (angleRomb.Text == "" && firstDiagonalRomb.IsEnabled == false && secondDiagonalRomb.IsEnabled == false)
             {
@@ -115,10 +116,10 @@ namespace RabotaDlyaTrpo
 
             if (sideRomb.Text != "" && angleRomb.Text != "")
             {
-                var A = Convert.ToInt32(sideRomb.Text);
-                var B = Convert.ToInt32(angleRomb.Text);
-                int S;
-                S = A + B;
+                var A = Convert.ToDouble(sideRomb.Text);
+                var B = Convert.ToDouble(angleRomb.Text);
+                double S;
+                S = A * A * Math.Sin(B);
                 areaRomb.Text = S.ToString();
             }
 
@@ -128,9 +129,10 @@ namespace RabotaDlyaTrpo
                 var A = Convert.ToInt32(firstDiagonalRomb.Text);
                 var B = Convert.ToInt32(secondDiagonalRomb.Text);
                 int S;
-                S = A + B;
+                S = (A * B) / 2;
                 areaRomb.Text = S.ToString();
             }
+
             firstDiagonalRomb.IsEnabled = true;
             secondDiagonalRomb.IsEnabled = true;
             sideRomb.IsEnabled = true;
