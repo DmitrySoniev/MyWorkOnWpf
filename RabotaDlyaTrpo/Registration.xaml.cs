@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Data.Sql;
 
 namespace RabotaDlyaTrpo
 {
@@ -76,20 +77,11 @@ namespace RabotaDlyaTrpo
 
             if (LoginTextBox.Text != "" && ImyaTextBox.Text != "" && FamiliyaTextBox.Text != "" && OtchestvoTextBox.Text != "" && PasswordBox.Password != "" && VerifyPasswordBox.Password != "")
             {
-                // Заглушка
-                //User _user = new User();
-
-                //_user.login = LoginTextBox.Text;
-                //_user.password = VerifyPasswordBox.Password;
-                //_user.imya = ImyaTextBox.Text;
-                //_user.familiya = FamiliyaTextBox.Text;
-                //_user.otchestvo = OtchestvoTextBox.Text;
-                //StreamWriter _streamWriter = new StreamWriter("bd.txt");
-                //_streamWriter.WriteLine(_user.login);
+                
 
 
 
-                MessageBox.Show("Регистрация прошла успешно!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Регистрация прошла успешно!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 Window _registrationWindow = new MainWindow();
                 this.Close();

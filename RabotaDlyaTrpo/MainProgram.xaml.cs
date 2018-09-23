@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,23 +28,55 @@ namespace RabotaDlyaTrpo
 
         private void sideRomb_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
+            TextBox _textBox = sender as TextBox;
+            if ((!Char.IsDigit(e.Text, 0)) && (e.Text != ","))
+            {
+                { e.Handled = true; }
+            }
+            else
+if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == "")))
+            {
+                e.Handled = true;
+
+            }
+
         }
 
         private void angleRomb_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
+            TextBox _textBox = sender as TextBox;
+            if ((!Char.IsDigit(e.Text, 0)) && (e.Text != ","))
+            {
+                { e.Handled = true; }
+            }
+            else
+                if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == "")))
+            { e.Handled = true; }
         }
 
         private void firstDiagonalRomb_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
-            
+            TextBox _textBox = sender as TextBox;
+            if ((!Char.IsDigit(e.Text, 0)) && (e.Text != ","))
+            {
+                { e.Handled = true; }
+            }
+            else
+                if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == "")))
+            { e.Handled = true; }
+
         }
 
         private void secondDiagonalRomb_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
+            TextBox _textBox = sender as TextBox;
+            if ((!Char.IsDigit(e.Text, 0)) && (e.Text != ","))
+            {
+                { e.Handled = true; }
+            }
+            else
+                if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == "")))
+            { e.Handled = true; }
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -90,7 +123,7 @@ namespace RabotaDlyaTrpo
 
         private void CalculateRombButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (sideRomb.Text == "" && firstDiagonalRomb.IsEnabled == false && secondDiagonalRomb.IsEnabled == false)
             {
                 MessageBox.Show("Введите сторону ромба!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -116,21 +149,37 @@ namespace RabotaDlyaTrpo
 
             if (sideRomb.Text != "" && angleRomb.Text != "")
             {
+                string writePath = @"E:\ТРПО\sideRombandangleRomb.txt";
                 var A = Convert.ToDouble(sideRomb.Text);
                 var B = Convert.ToDouble(angleRomb.Text);
                 double S;
                 S = A * A * Math.Sin(B);
                 areaRomb.Text = S.ToString();
+                using (StreamWriter sw = new StreamWriter(writePath))
+                {
+                    sw.WriteLine("Сторона ромба " + sideRomb.Text);
+                    sw.WriteLine("Угол ромба " + angleRomb.Text);
+                    sw.WriteLine("Ответ" + areaRomb.Text);
+                    sw.Close();
+                }
             }
 
 
             if (firstDiagonalRomb.Text != "" && secondDiagonalRomb.Text != "")
             {
-                var A = Convert.ToInt32(firstDiagonalRomb.Text);
-                var B = Convert.ToInt32(secondDiagonalRomb.Text);
-                int S;
+                string writePath = @"E:\ТРПО\firstDiagonalRombandSecondDiagonalRomb.txt";
+                var A = Convert.ToDouble(firstDiagonalRomb.Text);
+                var B = Convert.ToDouble(secondDiagonalRomb.Text);
+                double S;
                 S = (A * B) / 2;
                 areaRomb.Text = S.ToString();
+                using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine("Первая диагональ ромба " + firstDiagonalRomb.Text);
+                    sw.WriteLine("Вторая диагональ ромба " + secondDiagonalRomb.Text);
+                    sw.WriteLine("Ответ" + areaRomb.Text);
+                    sw.Close();
+                }
             }
 
             firstDiagonalRomb.IsEnabled = true;
@@ -150,7 +199,5 @@ namespace RabotaDlyaTrpo
             sideRomb.IsEnabled = false;
             angleRomb.IsEnabled = false;
         }
-
-
     }
 }
