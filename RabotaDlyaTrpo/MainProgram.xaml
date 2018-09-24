@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Main" Height="420" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="Images/lake.jpg"/>
+        <ImageBrush ImageSource="Images/lug.jpg"/>
     </Window.Background>
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="32,19,0,0" TextWrapping="Wrap" Text="Для нахождения площади ромба введите значение стороны и угла ромба или значение двух диагоналей" FontFamily="Helvetica" FontSize="15" Foreground="White" VerticalAlignment="Top"/>

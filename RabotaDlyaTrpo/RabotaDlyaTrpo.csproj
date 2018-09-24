@@ -119,9 +119,6 @@
     <Resource Include="Images\Nature.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Math.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Sea.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Mountains.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\lug.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
