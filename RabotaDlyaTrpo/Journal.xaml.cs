@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.IO.Compression;
 
 namespace RabotaDlyaTrpo
 {
@@ -43,20 +42,6 @@ namespace RabotaDlyaTrpo
             DateTime _dateTime = new DateTime();
             JournaListBox.Items.Add("Дата входа:" + _dateTime.ToLocalTime());
 
-        }
-
-        private void ArchiveJournal_Click(object sender, RoutedEventArgs e)
-        {
-            //string startPath = @"e:\ТРПО";
-            //string zipPath = @"e:\ТРПО\user.zip";
-            //string extractPath = @"e:\ТРПО";
-            //ZipFile.CreateFromDirectory(startPath, zipPath);
-            //ZipFile.ExtractToDirectory(zipPath, extractPath);
-            using (ZipArchive zip = ZipFile.Open("test.zip", ZipArchiveMode.Create))
-            {
-                zip.CreateEntryFromFile(@"e:\ТРПО\user.txt", "user.txt");
-            }
-            MessageBox.Show("Выполнено!", "Архивация прошла успешно", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
