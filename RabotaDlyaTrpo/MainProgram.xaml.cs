@@ -155,13 +155,13 @@ if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == 
                 double S;
                 S = A * A * Math.Sin(B);
                 areaRomb.Text = S.ToString();
-                using (StreamWriter sw = new StreamWriter(writePath))
-                {
-                    sw.WriteLine("Сторона ромба " + sideRomb.Text);
-                    sw.WriteLine("Угол ромба " + angleRomb.Text);
-                    sw.WriteLine("Ответ" + areaRomb.Text);
-                    sw.Close();
-                }
+                //using (StreamWriter _streamWriter = new StreamWriter(writePath))
+                //{
+                //    _streamWriter.WriteLine("Сторона ромба " + sideRomb.Text);
+                //    _streamWriter.WriteLine("Угол ромба " + angleRomb.Text);
+                //    _streamWriter.WriteLine("Ответ" + areaRomb.Text);
+                //    _streamWriter.Close();
+                //}
             }
 
 
@@ -173,13 +173,13 @@ if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == 
                 double S;
                 S = (A * B) / 2;
                 areaRomb.Text = S.ToString();
-                using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
-                {
-                    sw.WriteLine("Первая диагональ ромба " + firstDiagonalRomb.Text);
-                    sw.WriteLine("Вторая диагональ ромба " + secondDiagonalRomb.Text);
-                    sw.WriteLine("Ответ" + areaRomb.Text);
-                    sw.Close();
-                }
+                //using (StreamWriter _streamWriter2 = new StreamWriter(writePath, true, System.Text.Encoding.Default))
+                //{
+                //    _streamWriter2.WriteLine("Первая диагональ ромба " + firstDiagonalRomb.Text);
+                //    _streamWriter2.WriteLine("Вторая диагональ ромба " + secondDiagonalRomb.Text);
+                //    _streamWriter2.WriteLine("Ответ" + areaRomb.Text);
+                //    _streamWriter2.Close();
+                //}
             }
 
             firstDiagonalRomb.IsEnabled = true;
