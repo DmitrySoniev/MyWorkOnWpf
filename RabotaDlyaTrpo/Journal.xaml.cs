@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +44,23 @@ namespace RabotaDlyaTrpo
             DateTime _dateTime = new DateTime();
             JournaListBox.Items.Add("Дата входа:" + _dateTime.ToLocalTime());
 
+        }
+
+        private void ArchiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string zipPath = @"E:\ТРПО\temp";
+            string zipFile = @"E:\ТРПО\DataAboutUsers.zip";
+            ZipFile.CreateFromDirectory(zipPath, zipFile);
+            File.Delete(@"E:\ТРПО\User.txt");
+            MessageBox.Show("Архивация прошла успешно!", "Выполнено!", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
+
+        private void DearchiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            ZipFile.ExtractToDirectory(@"E:\ТРПО\DataAboutUsers.zip", @"E:\ТРПО\");
+            File.Delete(@"E:\ТРПО\DataAboutUsers.zip");
+            MessageBox.Show("Разархивация прошла успешно", "Выполнено!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

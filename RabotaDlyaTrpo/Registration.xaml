@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabotaDlyaTrpo"
         mc:Ignorable="d"
-        Title="Registration" Height="400" Width="375">
+        Title="Регистрация" Height="400" Width="375">
     <Window.Background>
         <ImageBrush ImageSource="Images/Sea.jpg"/>
     </Window.Background>
