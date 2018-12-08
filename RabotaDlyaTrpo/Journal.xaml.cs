@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -41,17 +43,32 @@ namespace RabotaDlyaTrpo
 
         private void CheckJournalButton_Click(object sender, RoutedEventArgs e)
         {
-            DateTime _dateTime = new DateTime();
-            JournaListBox.Items.Add("Дата входа:" + _dateTime.ToLocalTime());
+            //string selectUsers = @"SELECT * From[User]";
+            //Расскоментировать для компьютера
+            string connectionString = @"Data Source=ДМИТРИЙ-ПК\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Дмитрий-ПК\Дмитрий;Password=";
+            //Расскоментировать для ноутбука
+            //string connectionString = @"Data Source=DMITRY\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Dmitry\Дмитрий;Password=";
+            using (SqlConnection openConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("SELECT Id_Zapisi,Id_User,Login_User,Data,ID_Deistviya,Nazvanie_Deistviya FROM [ZavpisvZhurnale]", openConnection);
 
+                if (openConnection.State == ConnectionState.Closed)
+                {
+                    openConnection.Open();
+                    SqlDataReader read = command.ExecuteReader(); 
+                    while (read.Read()) 
+                    {
+                        JournaListBox.Items.Add("   Ид "+read.GetValue(0).ToString()+"  Ид Юзера    "+read.GetValue(1).ToString()+" Логин Пользователя  " + read.GetValue(2).ToString() + " Дата    " +read.GetValue(3).ToString() +"   Ид действия "+ read.GetValue(4).ToString() +"   Название Действия   "+read.GetValue(5).ToString()); 
+                    }
+                }
+            }
         }
-
         private void ArchiveButton_Click(object sender, RoutedEventArgs e)
         {
             string zipPath = @"E:\ТРПО\temp";
             string zipFile = @"E:\ТРПО\DataAboutUsers.zip";
             ZipFile.CreateFromDirectory(zipPath, zipFile);
-            File.Delete(@"E:\ТРПО\User.txt");
+            //File.Delete(@"E:\ТРПО\User.txt");
             MessageBox.Show("Архивация прошла успешно!", "Выполнено!", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
@@ -59,7 +76,7 @@ namespace RabotaDlyaTrpo
         private void DearchiveButton_Click(object sender, RoutedEventArgs e)
         {
             ZipFile.ExtractToDirectory(@"E:\ТРПО\DataAboutUsers.zip", @"E:\ТРПО\");
-            File.Delete(@"E:\ТРПО\DataAboutUsers.zip");
+            //File.Delete(@"E:\ТРПО\DataAboutUsers.zip");
             MessageBox.Show("Разархивация прошла успешно", "Выполнено!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }

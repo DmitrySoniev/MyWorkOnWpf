@@ -1,5 +1,10 @@
-﻿using System;
+﻿using RabotaDlyaTrpo;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace RabotaDlyaTrpo
 {
     /// <summary>
@@ -24,12 +30,10 @@ namespace RabotaDlyaTrpo
         public MainWindow()
         {
             InitializeComponent();
-            LoginTextBox.Text = "Dmitry";
-            LoginPasswordBox.Password = "Dmitry";
 
-        }
+    }
 
-        private void RegistrationClick(object sender, RoutedEventArgs e)
+    private void RegistrationClick(object sender, RoutedEventArgs e)
         {
             Window _registrationWindow = new Registration();
             this.Close();
@@ -38,6 +42,7 @@ namespace RabotaDlyaTrpo
 
         private void Authorization_Click(object sender, RoutedEventArgs e)
         {
+
             if (string.IsNullOrEmpty(LoginTextBox.Text))
             {
 
@@ -55,20 +60,61 @@ namespace RabotaDlyaTrpo
 
             if (LoginTextBox.Text != "" && LoginPasswordBox.Password != "")
             {
-                string path = @"E:\ТРПО\User.txt";
-                //using (StreamReader _streamreader = new StreamReader(path, System.Text.cont))
-                //{
-                //    _streamreader.Read("Логин пользователя");
-                //}
-                    Window _authorizationWindow = new Main();
-                this.Close();
-                _authorizationWindow.ShowDialog();
+
+                bool success = false;
+                string login = LoginTextBox.Text;
+                string password = LoginPasswordBox.Password;
+
+                //Расскоментировать для компьютера
+                string connectionString = @"Data Source=ДМИТРИЙ-ПК\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Дмитрий-ПК\Дмитрий;Password=";
+                //Расскоментировать для ноутбука
+                //string connectionString = @"Data Source=DMITRY\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Dmitry\Дмитрий;Password=";
+                const string CheckUsers = "Select * From [User]  Where [Login] = @Login AND [Password]=@Password";
+                using (SqlConnection openConnection = new SqlConnection(connectionString))
+                {
+                    if (openConnection.State == ConnectionState.Closed)
+                    {
+
+
+                        openConnection.Open();
+
+                        SqlCommand check = new SqlCommand(CheckUsers, openConnection);
+                        check.Parameters.AddWithValue("@Login", login);
+                        check.Parameters.AddWithValue("@Password", password);
+                        using (var dataReader = check.ExecuteReader())
+                        {
+                            success = dataReader.Read();
+
+                        }
+                        if (success)
+                        {
+
+                            using (db_SdgEntities db = new db_SdgEntities())
+                            {
+                                
+                                var logins = db.User.FirstOrDefault(data => data.Login==login);
+                                Spravochnik spravochnik = new Spravochnik { Nazvanie = "Авторизация" };
+                                db.Spravochnik.Add(spravochnik);
+                                db.SaveChanges();
+                                ZavpisvZhurnale journal = new ZavpisvZhurnale { Data = DateTime.Now, Id_User = logins.Id_User, Id_Deistviya = spravochnik.ID_Deistviya, Nazvanie_deistviya = spravochnik.Nazvanie, Login_user=logins.Login};
+                                db.ZavpisvZhurnale.Add(journal);
+                                db.SaveChanges();
+
+                            }
+                            Window _authorizationWindow = new Main();
+                            this.Close();
+                            _authorizationWindow.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Неверно введен логин или пароль, или учетная запись не создана", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
+                }
             }
-            else
-            {
-                MessageBox.Show("Неверно введен логин или пароль, или учетная запись не создана", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+
         }
 
         private void JournalButton_Click(object sender, RoutedEventArgs e)
@@ -107,3 +153,4 @@ namespace RabotaDlyaTrpo
 
     }
 }
+

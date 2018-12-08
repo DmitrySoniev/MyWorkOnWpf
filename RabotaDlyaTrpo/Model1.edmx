@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище db_SdgModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Romb">
+          <Key>
+            <PropertyRef Name="Id_Romb" />
+          </Key>
+          <Property Name="Id_Romb" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Storona" Type="float" />
+          <Property Name="Ugol" Type="float" />
+          <Property Name="Diagonal1" Type="float" />
+          <Property Name="Digannal2" Type="float" />
+          <Property Name="Ploschad" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spravochnik">
+          <Key>
+            <PropertyRef Name="ID_Deistviya" />
+          </Key>
+          <Property Name="ID_Deistviya" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazvanie" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Familiya" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Imya" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Otchestvo" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "db_Sdg.dbo.User_Romb" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="User_Romb">
+          <Key>
+            <PropertyRef Name="Nomer_romba" />
+            <PropertyRef Name="Id_user" />
+          </Key>
+          <Property Name="Nomer_romba" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_user" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ZavpisvZhurnale">
+          <Key>
+            <PropertyRef Name="Id_Zapisi" />
+          </Key>
+          <Property Name="Id_Zapisi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_User" Type="int" Nullable="false" />
+          <Property Name="Login_user" Type="varchar" MaxLength="20" />
+          <Property Name="Data" Type="date" Nullable="false" />
+          <Property Name="Nazvanie_deistviya" Type="varchar" MaxLength="20" />
+          <Property Name="Id_Deistviya" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_User_Romb_Romb">
+          <End Role="Romb" Type="Self.Romb" Multiplicity="1" />
+          <End Role="User_Romb" Type="Self.User_Romb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Romb">
+              <PropertyRef Name="Id_Romb" />
+            </Principal>
+            <Dependent Role="User_Romb">
+              <PropertyRef Name="Nomer_romba" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Romb_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Romb" Type="Self.User_Romb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="User_Romb">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZavpisvZhurnale_Spravochnik">
+          <End Role="Spravochnik" Type="Self.Spravochnik" Multiplicity="1" />
+          <End Role="ZavpisvZhurnale" Type="Self.ZavpisvZhurnale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spravochnik">
+              <PropertyRef Name="ID_Deistviya" />
+            </Principal>
+            <Dependent Role="ZavpisvZhurnale">
+              <PropertyRef Name="Id_Deistviya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZavpisvZhurnale_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ZavpisvZhurnale" Type="Self.ZavpisvZhurnale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="ZavpisvZhurnale">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище db_SdgModelContainer">
+          <EntitySet Name="Romb" EntityType="Self.Romb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spravochnik" EntityType="Self.Spravochnik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZavpisvZhurnale" EntityType="Self.ZavpisvZhurnale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Romb" EntityType="Self.User_Romb" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [User_Romb].[Nomer_romba] AS [Nomer_romba], 
+    [User_Romb].[Id_user] AS [Id_user]
+    FROM [dbo].[User_Romb] AS [User_Romb]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_User_Romb_Romb" Association="Self.FK_User_Romb_Romb">
+            <End Role="Romb" EntitySet="Romb" />
+            <End Role="User_Romb" EntitySet="User_Romb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Romb_User" Association="Self.FK_User_Romb_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Romb" EntitySet="User_Romb" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZavpisvZhurnale_Spravochnik" Association="Self.FK_ZavpisvZhurnale_Spravochnik">
+            <End Role="Spravochnik" EntitySet="Spravochnik" />
+            <End Role="ZavpisvZhurnale" EntitySet="ZavpisvZhurnale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZavpisvZhurnale_User" Association="Self.FK_ZavpisvZhurnale_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ZavpisvZhurnale" EntitySet="ZavpisvZhurnale" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_SdgModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="db_SdgEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Romb" EntityType="db_SdgModel.Romb" />
+          <EntitySet Name="Spravochnik" EntityType="db_SdgModel.Spravochnik" />
+          <EntitySet Name="sysdiagrams" EntityType="db_SdgModel.sysdiagrams" />
+          <EntitySet Name="User" EntityType="db_SdgModel.User" />
+          <EntitySet Name="ZavpisvZhurnale" EntityType="db_SdgModel.ZavpisvZhurnale" />
+          <AssociationSet Name="FK_ZavpisvZhurnale_Spravochnik" Association="db_SdgModel.FK_ZavpisvZhurnale_Spravochnik">
+            <End Role="Spravochnik" EntitySet="Spravochnik" />
+            <End Role="ZavpisvZhurnale" EntitySet="ZavpisvZhurnale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZavpisvZhurnale_User" Association="db_SdgModel.FK_ZavpisvZhurnale_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ZavpisvZhurnale" EntitySet="ZavpisvZhurnale" />
+          </AssociationSet>
+          <AssociationSet Name="User_Romb" Association="db_SdgModel.User_Romb">
+            <End Role="Romb" EntitySet="Romb" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Romb">
+          <Key>
+            <PropertyRef Name="Id_Romb" />
+          </Key>
+          <Property Name="Id_Romb" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Storona" Type="Double" />
+          <Property Name="Ugol" Type="Double" />
+          <Property Name="Diagonal1" Type="Double" />
+          <Property Name="Digannal2" Type="Double" />
+          <Property Name="Ploschad" Type="Double" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="db_SdgModel.User_Romb" FromRole="Romb" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Spravochnik">
+          <Key>
+            <PropertyRef Name="ID_Deistviya" />
+          </Key>
+          <Property Name="ID_Deistviya" Type="Int32" Nullable="false" />
+          <Property Name="Nazvanie" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ZavpisvZhurnale" Relationship="db_SdgModel.FK_ZavpisvZhurnale_Spravochnik" FromRole="Spravochnik" ToRole="ZavpisvZhurnale" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Familiya" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Imya" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Otchestvo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ZavpisvZhurnale" Relationship="db_SdgModel.FK_ZavpisvZhurnale_User" FromRole="User" ToRole="ZavpisvZhurnale" />
+          <NavigationProperty Name="Romb" Relationship="db_SdgModel.User_Romb" FromRole="User" ToRole="Romb" />
+        </EntityType>
+        <EntityType Name="ZavpisvZhurnale">
+          <Key>
+            <PropertyRef Name="Id_Zapisi" />
+          </Key>
+          <Property Name="Id_Zapisi" Type="Int32" Nullable="false" />
+          <Property Name="Id_User" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Id_Deistviya" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Spravochnik" Relationship="db_SdgModel.FK_ZavpisvZhurnale_Spravochnik" FromRole="ZavpisvZhurnale" ToRole="Spravochnik" />
+          <NavigationProperty Name="User" Relationship="db_SdgModel.FK_ZavpisvZhurnale_User" FromRole="ZavpisvZhurnale" ToRole="User" />
+          <Property Name="Nazvanie_deistviya" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Login_user" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_ZavpisvZhurnale_Spravochnik">
+          <End Type="db_SdgModel.Spravochnik" Role="Spravochnik" Multiplicity="1" />
+          <End Type="db_SdgModel.ZavpisvZhurnale" Role="ZavpisvZhurnale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spravochnik">
+              <PropertyRef Name="ID_Deistviya" />
+            </Principal>
+            <Dependent Role="ZavpisvZhurnale">
+              <PropertyRef Name="Id_Deistviya" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZavpisvZhurnale_User">
+          <End Type="db_SdgModel.User" Role="User" Multiplicity="1" />
+          <End Type="db_SdgModel.ZavpisvZhurnale" Role="ZavpisvZhurnale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="ZavpisvZhurnale">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Romb">
+          <End Type="db_SdgModel.Romb" Role="Romb" Multiplicity="*" />
+          <End Type="db_SdgModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище db_SdgModelContainer" CdmEntityContainer="db_SdgEntities">
+          <EntitySetMapping Name="Romb">
+            <EntityTypeMapping TypeName="db_SdgModel.Romb">
+              <MappingFragment StoreEntitySet="Romb">
+                <ScalarProperty Name="Ploschad" ColumnName="Ploschad" />
+                <ScalarProperty Name="Digannal2" ColumnName="Digannal2" />
+                <ScalarProperty Name="Diagonal1" ColumnName="Diagonal1" />
+                <ScalarProperty Name="Ugol" ColumnName="Ugol" />
+                <ScalarProperty Name="Storona" ColumnName="Storona" />
+                <ScalarProperty Name="Id_Romb" ColumnName="Id_Romb" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spravochnik">
+            <EntityTypeMapping TypeName="db_SdgModel.Spravochnik">
+              <MappingFragment StoreEntitySet="Spravochnik">
+                <ScalarProperty Name="Nazvanie" ColumnName="Nazvanie" />
+                <ScalarProperty Name="ID_Deistviya" ColumnName="ID_Deistviya" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="db_SdgModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="db_SdgModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Imya" ColumnName="Imya" />
+                <ScalarProperty Name="Familiya" ColumnName="Familiya" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZavpisvZhurnale">
+            <EntityTypeMapping TypeName="db_SdgModel.ZavpisvZhurnale">
+              <MappingFragment StoreEntitySet="ZavpisvZhurnale">
+                <ScalarProperty Name="Login_user" ColumnName="Login_user" />
+                <ScalarProperty Name="Nazvanie_deistviya" ColumnName="Nazvanie_deistviya" />
+                <ScalarProperty Name="Id_Deistviya" ColumnName="Id_Deistviya" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="Id_Zapisi" ColumnName="Id_Zapisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="User_Romb" TypeName="db_SdgModel.User_Romb" StoreEntitySet="User_Romb">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id_User" ColumnName="Id_user" />
+            </EndProperty>
+            <EndProperty Name="Romb">
+              <ScalarProperty Name="Id_Romb" ColumnName="Nomer_romba" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

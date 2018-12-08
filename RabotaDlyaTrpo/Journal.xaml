@@ -1,4 +1,4 @@
-﻿<Window x:Class="RabotaDlyaTrpo.Journal"
+﻿ <Window x:Class="RabotaDlyaTrpo.Journal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,7 +16,7 @@
             <ColumnDefinition Width="83*"/>
             <ColumnDefinition Width="709*"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="JournaListBox" HorizontalAlignment="Left" Height="313"  Margin="8,46,0,0" VerticalAlignment="Top" Width="594" Grid.Column="1"/>
+        <ListBox  x:Name="JournaListBox" HorizontalAlignment="Left" Height="313"  Margin="8,46,0,0" VerticalAlignment="Top" Width="594" Grid.Column="1"/>
         <Label Content="Журнал" FontFamily="Helvetica"  FontSize="20" Foreground="White" HorizontalAlignment="Left" Margin="51,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Button x:Name="ChangeUserButton" FontFamily="Helvetica" FontSize="16" Content="Сменить пользователя" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Width="180" Height="25" Click="ChangeUserButton_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="CheckJournalButton" Content="Просмотреть журнал" FontFamily="Helvetica" FontSize="16" HorizontalAlignment="Left" Margin="522,376,0,0" VerticalAlignment="Top" Width="182" Click="CheckJournalButton_Click" Height="26" Grid.Column="1"/>

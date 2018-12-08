@@ -12,25 +12,18 @@ namespace RabotaDlyaTrpo
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Spravochnik
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Spravochnik()
         {
             this.ZavpisvZhurnale = new HashSet<ZavpisvZhurnale>();
-            this.Romb = new HashSet<Romb>();
         }
     
-        public int Id_User { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Familiya { get; set; }
-        public string Imya { get; set; }
-        public string Otchestvo { get; set; }
+        public int ID_Deistviya { get; set; }
+        public string Nazvanie { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ZavpisvZhurnale> ZavpisvZhurnale { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Romb> Romb { get; set; }
     }
 }

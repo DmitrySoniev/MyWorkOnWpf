@@ -12,25 +12,22 @@ namespace RabotaDlyaTrpo
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Romb
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Romb()
         {
-            this.ZavpisvZhurnale = new HashSet<ZavpisvZhurnale>();
-            this.Romb = new HashSet<Romb>();
+            this.User = new HashSet<User>();
         }
     
-        public int Id_User { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Familiya { get; set; }
-        public string Imya { get; set; }
-        public string Otchestvo { get; set; }
+        public int Id_Romb { get; set; }
+        public Nullable<double> Storona { get; set; }
+        public Nullable<double> Ugol { get; set; }
+        public Nullable<double> Diagonal1 { get; set; }
+        public Nullable<double> Digannal2 { get; set; }
+        public double Ploschad { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ZavpisvZhurnale> ZavpisvZhurnale { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Romb> Romb { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }

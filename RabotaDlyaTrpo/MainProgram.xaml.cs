@@ -1,5 +1,8 @@
 ﻿using System;
+
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -34,12 +37,10 @@ namespace RabotaDlyaTrpo
                 { e.Handled = true; }
             }
             else
-if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == "")))
+            if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == "")))
             {
                 e.Handled = true;
-
             }
-
         }
 
         private void angleRomb_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -149,36 +150,96 @@ if ((e.Text == ",") && ((_textBox.Text.IndexOf(",") != -1) || (_textBox.Text == 
 
             if (sideRomb.Text != "" && angleRomb.Text != "")
             {
-                string writePath = @"E:\ТРПО\sideRombandangleRomb.txt";
-                var A = Convert.ToDouble(sideRomb.Text);
-                var B = Convert.ToDouble(angleRomb.Text);
-                double S;
-                S = A * A * Math.Sin(B);
-                areaRomb.Text = S.ToString();
-                using (StreamWriter sw = new StreamWriter(writePath))
+                //string writePath = @"E:\ТРПО\sideRombandangleRomb.txt";
+                //Расскоментировать для пк
+                string connectionString = @"Data Source=ДМИТРИЙ-ПК\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Дмитрий-ПК\Дмитрий;Password=";
+                //Раскоментировать для ноутбука
+                //string connectionString = @"Data Source=DMITRY\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Dmitry\Дмитрий;Password=";
+                using (SqlConnection openConnection = new SqlConnection(connectionString))
+
                 {
-                    sw.WriteLine("Сторона ромба " + sideRomb.Text);
-                    sw.WriteLine("Угол ромба " + angleRomb.Text);
-                    sw.WriteLine("Ответ" + areaRomb.Text);
-                    sw.Close();
+                    if (openConnection.State == ConnectionState.Closed)
+                    {
+
+                        openConnection.Open();
+                        string saveUsers = "INSERT into [Romb] ([Storona],[Ugol],[Ploschad]) values (@Storona,@Ugol,@Ploschad)";
+
+                        using (SqlCommand querySaveUsers = new SqlCommand(saveUsers))
+                        {
+
+                            querySaveUsers.Connection = openConnection;
+
+                            using (db_SdgEntities db = new db_SdgEntities())
+                            {
+                                var users = db.ZavpisvZhurnale.OrderByDescending(x => x.Id_Zapisi).FirstOrDefault();
+                                Spravochnik spravochnik = new Spravochnik { Nazvanie = "Вычисление" };
+                                db.Spravochnik.Add(spravochnik);
+                                db.SaveChanges();
+                                ZavpisvZhurnale journal = new ZavpisvZhurnale { Data = DateTime.Now, Id_User = users.Id_User, Id_Deistviya = spravochnik.ID_Deistviya, Nazvanie_deistviya = spravochnik.Nazvanie, Login_user = users.Login_user };
+                                db.ZavpisvZhurnale.Add(journal);
+                                db.SaveChanges();
+
+                            }
+                            var storonaRomba = Convert.ToDouble(sideRomb.Text);
+                            var ugolRomba = Convert.ToDouble(angleRomb.Text);
+                            double Ploschad;
+                            Ploschad = storonaRomba * storonaRomba * Math.Sin(ugolRomba);
+                            areaRomb.Text = Ploschad.ToString();
+                            querySaveUsers.Parameters.Add("@Storona", SqlDbType.Float).Value = storonaRomba;
+                            querySaveUsers.Parameters.Add("@Ugol", SqlDbType.Float).Value = ugolRomba;
+                            querySaveUsers.Parameters.Add("@Ploschad", SqlDbType.Float).Value = Ploschad;
+                            querySaveUsers.ExecuteNonQuery();
+
+                        }
+                    }
                 }
             }
 
 
             if (firstDiagonalRomb.Text != "" && secondDiagonalRomb.Text != "")
             {
-                string writePath = @"E:\ТРПО\firstDiagonalRombandSecondDiagonalRomb.txt";
-                var A = Convert.ToDouble(firstDiagonalRomb.Text);
-                var B = Convert.ToDouble(secondDiagonalRomb.Text);
-                double S;
-                S = (A * B) / 2;
-                areaRomb.Text = S.ToString();
-                using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
+                //Расскоментировать для пк
+                string connectionString = @"Data Source=ДМИТРИЙ-ПК\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Дмитрий-ПК\Дмитрий;Password=";
+                //Раскоментировать для ноутбука
+                //string connectionString = @"Data Source=DMITRY\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Dmitry\Дмитрий;Password=";
+                using (SqlConnection openConnection = new SqlConnection(connectionString))
+
                 {
-                    sw.WriteLine("Первая диагональ ромба " + firstDiagonalRomb.Text);
-                    sw.WriteLine("Вторая диагональ ромба " + secondDiagonalRomb.Text);
-                    sw.WriteLine("Ответ" + areaRomb.Text);
-                    sw.Close();
+                    if (openConnection.State == ConnectionState.Closed)
+                    {
+
+                        openConnection.Open();
+                        string saveUsers = "INSERT into [Romb] ([Diagonal1],[Digannal2],[Ploschad]) values (@Diagonal1,@Digannal2,@Ploschad)";
+
+                        using (SqlCommand querySaveUsers = new SqlCommand(saveUsers))
+                        {
+
+                            querySaveUsers.Connection = openConnection;
+
+                            using (db_SdgEntities db = new db_SdgEntities())
+                            {
+
+                                var users = db.ZavpisvZhurnale.OrderByDescending(x => x.Id_Zapisi).FirstOrDefault();
+                                Spravochnik spravochnik = new Spravochnik { Nazvanie = "Вычисление" };
+                                db.Spravochnik.Add(spravochnik);
+                                db.SaveChanges();
+                                ZavpisvZhurnale journal = new ZavpisvZhurnale { Data = DateTime.Now, Id_User = users.Id_User, Id_Deistviya = spravochnik.ID_Deistviya, Nazvanie_deistviya = spravochnik.Nazvanie, Login_user = users.Login_user };
+                                db.ZavpisvZhurnale.Add(journal);
+                                db.SaveChanges();
+
+                            }
+                            var DiagonalRomba1 = Convert.ToDouble(firstDiagonalRomb.Text);
+                            var DiagonalRomba2 = Convert.ToDouble(secondDiagonalRomb.Text);
+                            double Ploschad;
+                            Ploschad = (DiagonalRomba1 * DiagonalRomba2) / 2;
+                            areaRomb.Text = Ploschad.ToString();
+                            querySaveUsers.Parameters.Add("@Diagonal1", SqlDbType.Float).Value = DiagonalRomba1;
+                            querySaveUsers.Parameters.Add("@Digannal2", SqlDbType.Float).Value = DiagonalRomba2;
+                            querySaveUsers.Parameters.Add("@Ploschad", SqlDbType.Float).Value = Ploschad;
+                            querySaveUsers.ExecuteNonQuery();
+
+                        }
+                    }
                 }
             }
 

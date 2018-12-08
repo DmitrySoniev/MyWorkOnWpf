@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data;
+using System.Data.Entity.Core.Objects;
 
 namespace RabotaDlyaTrpo
 {
@@ -77,15 +80,64 @@ namespace RabotaDlyaTrpo
 
             if (LoginTextBox.Text != "" && ImyaTextBox.Text != "" && FamiliyaTextBox.Text != "" && OtchestvoTextBox.Text != "" && PasswordBox.Password != "" && VerifyPasswordBox.Password != "")
             {
-                
+                string login = LoginTextBox.Text;
+                string password = VerifyPasswordBox.Password;
+                string imya = ImyaTextBox.Text;
+                string otchestvo = OtchestvoTextBox.Text;
+                string familiya = FamiliyaTextBox.Text;
+                //Расскоментировать для компьютера
+                string connectionString = @"Data Source=ДМИТРИЙ-ПК\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Дмитрий-ПК\Дмитрий;Password=";
+                //Расскоментировать для ноутбука
+                //string connectionString = @"Data Source=DMITRY\SQLEXPRESS;Database=db_Sdg;Trusted_Connection=Yes;User ID=Dmitry\Дмитрий;Password=";
+                using (SqlConnection openConnection = new SqlConnection(connectionString))
 
+                {
+                    if (openConnection.State == ConnectionState.Closed)
+                    {
+                        bool FindedUser;
+                        openConnection.Open();
+                        string saveUsers = "INSERT into [User] ([Login],[Password],[Familiya],[Imya],[Otchestvo]) values (@Login,@Password,@Familiya,@Imya,@Otchestvo)";
+                        string selectUsers = "SELECT * from [User] Where [Login]=@Login";
+                        using (SqlCommand querySaveUsers = new SqlCommand(saveUsers))
+                        {
+                                                                                                          
+                            querySaveUsers.Connection = openConnection;
+                            SqlCommand checkLogin = new SqlCommand(selectUsers, openConnection);
+                            checkLogin.Parameters.AddWithValue("@Login", login);
 
+                            using (var dataReader = checkLogin.ExecuteReader())
+                            {
+                                FindedUser = dataReader.Read();
+                            }
+                            if (FindedUser)
+                            {
+                                MessageBox.Show("Пользователь с таким логином уже зарегистрирован", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
 
-                    MessageBox.Show("Регистрация прошла успешно!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                using (db_SdgEntities db = new db_SdgEntities())
+                                {
+                                    User users = new User { Login = login, Familiya = familiya, Imya = imya, Otchestvo = otchestvo, Password = password };
+                                    db.User.Add(users);
+                                    db.SaveChanges();
+                                    Spravochnik spravochnik = new Spravochnik { Nazvanie = "регистрация" };
+                                    db.Spravochnik.Add(spravochnik);
+                                    db.SaveChanges();
+                                    ZavpisvZhurnale journal = new ZavpisvZhurnale { Data = DateTime.Now, Id_User = users.Id_User, Id_Deistviya = spravochnik.ID_Deistviya, Nazvanie_deistviya = spravochnik.Nazvanie,Login_user=login };
+                                    db.ZavpisvZhurnale.Add(journal);
+                                    db.SaveChanges();
+                                    MessageBox.Show("Регистрация прошла успешно!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    Window _registrationWindow = new MainWindow();
+                                    this.Close();
+                                    _registrationWindow.ShowDialog();
+                                }
 
-                Window _registrationWindow = new MainWindow();
-                this.Close();
-                _registrationWindow.ShowDialog();
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -104,5 +156,9 @@ namespace RabotaDlyaTrpo
             if (!Char.IsLetter(e.Text, 0)) e.Handled = true;
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
